@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Virtual Waiter</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center; /* center horizontally */
+      align-items: center;     /* center vertically */
+      height: 100vh;           /* full viewport height */
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+    }
+
+    .container {
+      text-align: center;
+      background: white;
+      padding: 40px 60px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input[type="file"] {
+      padding: 12px 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    input[type="file"]:hover {
+      border-color: #0070f3;
+      background: #f0f8ff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Upload Screen -->
+  <div id="uploadScreen">
+    <h1>Upload Menu</h1>
+    <input type="file" id="fileInput" accept=".xlsx, .xls" />
+  </div>
+
+  <!-- Main App Screen (hidden initially) -->
+  <div id="mainApp" style="display:none;">
+      <img id="mainAppImage" src="https://media.istockphoto.com/id/504753908/pt/foto/happy-waitress-working-at-a-coffee-shop.jpg?s=612x612&w=0&k=20&c=YCfgEbNq_LMQj1z0W1zT_3kMUd79V2YakBfJ3V8Oslo=" alt="Waitress" style="border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1);" />
+    
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
