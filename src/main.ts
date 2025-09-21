@@ -60,17 +60,27 @@ fileInput.addEventListener("change", async () => {
   reader.readAsArrayBuffer(file);
 });
 
+async function getEphemeralKey() {
+  const res = await fetch("/api/session");
+  const { client_secret } = await res.json();
+  return client_secret.value; // short-lived token
+}
+
 async function initAgent(menuData: string) {
+  // 1. Fetch ephemeral key from your backend
+  const ephemeralKey = await getEphemeralKey();
+
+  // 2. Create agent
   const agent = new RealtimeAgent({
-    name: 'Assistant',
-    // Include the menu data in the instructions
-    instructions: `You are a helpful assistant. Use the following menu data to answer questions:\n${menuData}. All prices are in euro.`,
+    name: "Assistant",
+    instructions: `You are a helpful waiter. Use the following menu data to answer questions:\n${menuData}. All prices are in euro. Do not answer any queries that is not related to the menu.`,
   });
 
   const session = new RealtimeSession(agent);
 
+  // 3. Connect using the ephemeral key (safe for browser use)
   await session.connect({
-    apiKey: '', // ⚠️ Browser-safe Client key
+    apiKey: ephemeralKey,
   });
 
   // ✅ Hide upload screen
@@ -78,6 +88,6 @@ async function initAgent(menuData: string) {
 
   // ✅ Show main app screen
   mainApp.style.display = "block";
-  
+
   console.log("✅ Realtime session started with menu data");
 }
