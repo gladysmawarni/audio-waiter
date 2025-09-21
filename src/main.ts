@@ -1,4 +1,4 @@
-import { RealtimeAgent, RealtimeSession } from '@openai/agents/realtime';
+import { RealtimeAgent, RealtimeSession } from '@openai/agents-realtime';
 import * as XLSX from "xlsx";
 
 // Columns you want to keep
