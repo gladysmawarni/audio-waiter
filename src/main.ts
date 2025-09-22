@@ -68,8 +68,10 @@ async function getEphemeralKey() {
     console.log("Got response:", res.status);
 
     const data = await res.json();
-    console.log("Ephemeral response:", data);
+    console.log('aaa', data.value);
     return data.client_secret?.value;
+
+
   } catch (err) {
     console.error("getEphemeralKey failed:", err);
     throw err;
