@@ -66,28 +66,33 @@ async function getEphemeralKey() {
   return client_secret.value; // short-lived token
 }
 
+
 async function initAgent(menuData: string) {
-  // 1. Fetch ephemeral key from your backend
-  const ephemeralKey = await getEphemeralKey();
+  try {
+    // 1. Fetch ephemeral key
+    const ephemeralKey = await getEphemeralKey();
+    console.log("Ephemeral key:", ephemeralKey);
 
-  // 2. Create agent
-  const agent = new RealtimeAgent({
-    name: "Assistant",
-    instructions: `You are a helpful waiter. Use the following menu data to answer questions:\n${menuData}. All prices are in euro. Do not answer any queries that is not related to the menu.`,
-  });
+    // 2. Create agent
+    const agent = new RealtimeAgent({
+      name: "Assistant",
+      instructions: `You are a helpful waiter. Use the following menu data to answer questions:\n${menuData}. All prices are in euro. Do not answer any queries that is not related to the menu.`,
+    });
 
-  const session = new RealtimeSession(agent);
+    const session = new RealtimeSession(agent);
 
-  // 3. Connect using the ephemeral key (safe for browser use)
-  await session.connect({
-    apiKey: ephemeralKey,
-  });
+    // 3. Connect
+    await session.connect({ apiKey: ephemeralKey });
 
-  // ✅ Hide upload screen
-  uploadScreen.style.display = "none";
+    // ✅ Hide upload screen
+    uploadScreen.style.display = "none";
 
-  // ✅ Show main app screen
-  mainApp.style.display = "block";
+    // ✅ Show main app screen
+    mainApp.style.display = "block";
 
-  console.log("✅ Realtime session started with menu data");
+    console.log("✅ Realtime session started with menu data");
+  } catch (err) {
+    console.error("❌ Failed to init agent:", err);
+    alert("Could not start Realtime session. Check console for details.");
+  }
 }
