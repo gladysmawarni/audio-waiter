@@ -78,7 +78,6 @@ async function getEphemeralKey() {
 }
 
 
-
 async function initAgent(menuData: string) {
   try {
     console.log('here');
@@ -86,7 +85,6 @@ async function initAgent(menuData: string) {
 
     // 1. Fetch ephemeral key
     const ephemeralKey = await getEphemeralKey();
-    console.log("Ephemeral key:", ephemeralKey);
 
     // 2. Create agent
     const agent = new RealtimeAgent({
