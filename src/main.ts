@@ -44,7 +44,7 @@ fileInput.addEventListener("change", async () => {
 
       // Store globally so the agent can access
       const menuData = JSON.stringify(filteredData, null, 2);
-      console.log("✅ Filtered JSON stored:", menuData);
+      // console.log("✅ Filtered JSON stored:", menuData);
 
 
     // ✅ Call initAgent safely using a separate async IIFE
@@ -69,6 +69,9 @@ async function getEphemeralKey() {
 
 async function initAgent(menuData: string) {
   try {
+    console.log('here');
+    console.log(menuData);
+    
     // 1. Fetch ephemeral key
     const ephemeralKey = await getEphemeralKey();
     console.log("Ephemeral key:", ephemeralKey);
