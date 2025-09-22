@@ -62,20 +62,16 @@ fileInput.addEventListener("change", async () => {
 
 
 async function getEphemeralKey() {
-  console.log("Fetching /api/session...");
-  try {
-    const res = await fetch("/api/session");
-    console.log("Got response:", res.status);
-
-    const data = await res.json();
-    console.log("Ephemeral response:", data);
-    return data.client_secret?.value;
-  } catch (err) {
-    console.error("getEphemeralKey failed:", err);
-    throw err;
+  const res = await fetch("/api/session");
+  if (!res.ok) {
+    throw new Error(`Failed to fetch session: ${res.status}`);
   }
+  const data = await res.json();
+  if (!data.client_secret?.value) {
+    throw new Error("No client_secret in session response");
+  }
+  return data.client_secret.value;
 }
-
 
 
 
