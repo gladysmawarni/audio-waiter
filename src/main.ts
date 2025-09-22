@@ -62,10 +62,17 @@ fileInput.addEventListener("change", async () => {
 
 async function getEphemeralKey() {
   const res = await fetch("/api/session");
-  console.log(res);
-  const { client_secret } = await res.json();
-  return client_secret.value; // short-lived token
+  if (!res.ok) {
+    throw new Error(`Failed to fetch session: ${res.status}`);
+  }
+  const data = await res.json();
+  console.log(await res.json());
+  if (!data.client_secret?.value) {
+    throw new Error("No client_secret in session response");
+  }
+  return data.client_secret.value;
 }
+
 
 
 async function initAgent(menuData: string) {
