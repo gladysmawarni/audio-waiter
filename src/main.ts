@@ -62,6 +62,7 @@ fileInput.addEventListener("change", async () => {
 
 async function getEphemeralKey() {
   const res = await fetch("/api/session");
+  console.log(res);
   const { client_secret } = await res.json();
   return client_secret.value; // short-lived token
 }
@@ -71,7 +72,7 @@ async function initAgent(menuData: string) {
   try {
     console.log('here');
     console.log(menuData);
-    
+
     // 1. Fetch ephemeral key
     const ephemeralKey = await getEphemeralKey();
     console.log("Ephemeral key:", ephemeralKey);

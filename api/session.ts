@@ -17,7 +17,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }),
     });
 
-    console.log(resp);
 
     if (!resp.ok) {
       const err = await resp.text();
