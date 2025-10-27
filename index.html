@@ -49,11 +49,38 @@
     <input type="file" id="fileInput" accept=".xlsx, .xls" />
   </div>
 
-  <!-- Main App Screen (hidden initially) -->
-  <div id="mainApp" style="display:none;">
-      <img id="mainAppImage" src="https://media.istockphoto.com/id/504753908/pt/foto/happy-waitress-working-at-a-coffee-shop.jpg?s=612x612&w=0&k=20&c=YCfgEbNq_LMQj1z0W1zT_3kMUd79V2YakBfJ3V8Oslo=" alt="Waitress" style="border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1);" />
-    
+
+ <!-- Main app, Hidden by default -->
+<div id="mainApp" style="display: none; text-align: center; margin-top: 20px;">
+  <img
+    id="mainAppImage"
+    src="https://media.istockphoto.com/id/504753908/pt/foto/happy-waitress-working-at-a-coffee-shop.jpg?s=612x612&w=0&k=20&c=YCfgEbNq_LMQj1z0W1zT_3kMUd79V2YakBfJ3V8Oslo="
+    alt="Waitress"
+    style="border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); width:500px; max-width:100%; display:block; margin:0 auto;"
+  />
+
+  <!-- Output first (on top) -->
+  <div
+    id="output"
+    style="margin-top:15px; font-weight:normal; color:#3f3f3f; min-height:50px; border:1px solid #ddd; border-radius:8px; padding:8px; width:400px; margin-left:auto; margin-right:auto;"
+  ></div>
+
+  <!-- Input area below output -->
+  <div style="margin-top: 10px;">
+    <input
+      id="messageInput"
+      type="text"
+      placeholder="Type a message..."
+      style="padding:8px; width:400px; border-radius:8px; border:1px solid #ccc;"
+    />
+    <button
+      id="sendBtn"
+      style="padding:8px 12px; border:none; background:#007bff; color:white; border-radius:8px; cursor:pointer;"
+    >
+      Send
+    </button>
   </div>
+</div>
 
   <script type="module" src="/src/main.ts"></script>
 </body>

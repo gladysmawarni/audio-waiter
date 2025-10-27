@@ -16,6 +16,12 @@ const fileInput = document.getElementById("fileInput") as HTMLInputElement;
 const uploadScreen = document.getElementById("uploadScreen") as HTMLDivElement;
 const mainApp = document.getElementById("mainApp") as HTMLDivElement;
 
+const input = document.getElementById('messageInput') as HTMLInputElement | null;
+const output = document.getElementById('output') as HTMLDivElement | null;
+const sendBtn = document.getElementById('sendBtn') as HTMLButtonElement | null;
+
+let session: RealtimeSession | null = null; // top-level, accessible everywhere
+
 fileInput.addEventListener("change", async () => {
   const file = fileInput.files?.[0];
   if (!file) return alert("No file selected!");
@@ -66,10 +72,10 @@ async function getEphemeralKey() {
   try {
     const res = await fetch("/api/session");
     console.log("Got response:", res.status);
+    console.log(res)
 
     const data = await res.json();
     return data.value;
-
 
   } catch (err) {
     console.error("getEphemeralKey failed:", err);
@@ -80,21 +86,19 @@ async function getEphemeralKey() {
 
 async function initAgent(menuData: string) {
   try {
-    console.log('here');
-    console.log(menuData);
-
     // 1. Fetch ephemeral key
     const ephemeralKey = await getEphemeralKey();
+  
 
     // 2. Create agent
     const agent = new RealtimeAgent({
       name: "Assistant",
-      instructions: `You are a helpful waiter. Use the following menu data to answer questions:\n${menuData}. All prices are in euro. Do not answer any queries that is not related to the menu.`,
+      instructions: `You are a helpful waiter. Use the following menu data to answer questions:\n${menuData}. All prices are in euro. Do not answer any queries that is not related to the menu and only answer in English.`,
     });
 
-    const session = new RealtimeSession(agent);
 
     // 3. Connect
+    session = new RealtimeSession(agent); // assign to global variable
     await session.connect({ apiKey: ephemeralKey });
 
     // ✅ Hide upload screen
@@ -109,3 +113,21 @@ async function initAgent(menuData: string) {
     alert("Could not start Realtime session. Check console for details.");
   }
 }
+
+
+// Now session is visible inside sendMessage
+function sendMessage(): void {
+  if (!input || !output) return;
+  const text = input.value.trim();
+  if (!text || !session) return;
+
+  session.sendMessage(text); // send to Realtime session
+  output.textContent = text;  
+  input.value = '';
+}
+
+// wire up events (optional chaining so no runtime error if button missing)
+sendBtn?.addEventListener('click', sendMessage);
+input?.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') sendMessage();
+});
