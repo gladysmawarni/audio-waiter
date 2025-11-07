@@ -12,6 +12,17 @@ const FIXED_COLUMNS = [
   "ItemDescriptionEn",
 ];
 
+
+interface RealtimeHistoryItem {
+  itemId: string;
+  status: string;
+  content?: Array<{
+    type: string;
+    transcript: string;
+  }>;
+}
+
+
 const fileInput = document.getElementById("fileInput") as HTMLInputElement;
 const uploadScreen = document.getElementById("uploadScreen") as HTMLDivElement;
 const mainApp = document.getElementById("mainApp") as HTMLDivElement;
@@ -112,18 +123,19 @@ async function initAgent(menuData: string) {
     session = new RealtimeSession(agent); // assign to global variable
     await session.connect({ apiKey: ephemeralKey });
 
+
+    // look for new history every 1 second
     let lastPrintedId: string | null = null;
 
     setInterval(() => {
       if (!session?.history?.length) return;
 
-      const last = session.history.at(-1);
+      const last = session.history.at(-1) as RealtimeHistoryItem | undefined;
       if (!last) return;
 
       if (last.status === "completed" && last.itemId !== lastPrintedId) {
         const content = last.content?.[0];
         if (content?.type === "output_audio") {
-          console.log("✅ Completed (transcript):", content.transcript);
           appendMessage(content.transcript, "bot");
           lastPrintedId = last.itemId;
         }
