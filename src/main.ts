@@ -16,11 +16,13 @@ const fileInput = document.getElementById("fileInput") as HTMLInputElement;
 const uploadScreen = document.getElementById("uploadScreen") as HTMLDivElement;
 const mainApp = document.getElementById("mainApp") as HTMLDivElement;
 
+const chatBox = document.getElementById("chat-box")!;
 const input = document.getElementById('messageInput') as HTMLInputElement | null;
-const output = document.getElementById('output') as HTMLDivElement | null;
 const sendBtn = document.getElementById('sendBtn') as HTMLButtonElement | null;
 
 let session: RealtimeSession | null = null; // top-level, accessible everywhere
+
+
 
 fileInput.addEventListener("change", async () => {
   const file = fileInput.files?.[0];
@@ -67,6 +69,15 @@ fileInput.addEventListener("change", async () => {
 });
 
 
+function appendMessage(text: string, sender: "user" | "bot") {
+  const msg = document.createElement("div");
+  msg.className = `message ${sender}`;
+  msg.textContent = text;
+  chatBox.appendChild(msg);
+  chatBox.scrollTop = chatBox.scrollHeight; // auto-scroll
+}
+
+
 async function getEphemeralKey() {
   console.log("Fetching /api/session...");
   try {
@@ -101,6 +112,25 @@ async function initAgent(menuData: string) {
     session = new RealtimeSession(agent); // assign to global variable
     await session.connect({ apiKey: ephemeralKey });
 
+    let lastPrintedId: string | null = null;
+
+    setInterval(() => {
+      if (!session?.history?.length) return;
+
+      const last = session.history.at(-1);
+      if (!last) return;
+
+      if (last.status === "completed" && last.itemId !== lastPrintedId) {
+        const content = last.content?.[0];
+        if (content?.type === "output_audio") {
+          console.log("✅ Completed (transcript):", content.transcript);
+          appendMessage(content.transcript, "bot");
+          lastPrintedId = last.itemId;
+        }
+      }
+    }, 1000);
+
+
     // ✅ Hide upload screen
     uploadScreen.style.display = "none";
 
@@ -115,16 +145,17 @@ async function initAgent(menuData: string) {
 }
 
 
-// Now session is visible inside sendMessage
+// Send text input
 function sendMessage(): void {
-  if (!input || !output) return;
+  if (!input) return;
   const text = input.value.trim();
   if (!text || !session) return;
 
+  appendMessage(text, "user");
   session.sendMessage(text); // send to Realtime session
-  output.textContent = text;  
   input.value = '';
 }
+
 
 // wire up events (optional chaining so no runtime error if button missing)
 sendBtn?.addEventListener('click', sendMessage);
