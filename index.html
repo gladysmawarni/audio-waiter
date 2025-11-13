@@ -52,10 +52,9 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      height: 200px; /* 👈 set a consistent height for layout */
+      height: 400px; /* 👈 set a consistent height for layout */
     }
 
-    /* Chat box now takes up half the container height */
     #chat-box {
       flex: 1;
       padding: 15px;
@@ -132,8 +131,12 @@
 <body>
   <!-- Upload Screen -->
   <div id="uploadScreen">
-    <h1>Upload Menu</h1>
+    <h1>Upload Information</h1>
+    <p>Menu</p>
     <input type="file" id="fileInput" accept=".xlsx, .xls" />
+    <p>Additional Information</p>
+    <input type="file" id="fileInput2" accept=".xlsx, .xls, .doc, .txt, .md, .pdf" />
+
   </div>
 
 
@@ -143,7 +146,7 @@
     id="mainAppImage"
     src="https://media.istockphoto.com/id/504753908/pt/foto/happy-waitress-working-at-a-coffee-shop.jpg?s=612x612&w=0&k=20&c=YCfgEbNq_LMQj1z0W1zT_3kMUd79V2YakBfJ3V8Oslo="
     alt="Waitress"
-    style="border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); width:500px; max-width:100%; display:block; margin:0 auto;"
+    style="border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); width:250px; max-width:100%; display:block; margin:0 auto;"
   />
 
   <!-- Output first (on top) -->

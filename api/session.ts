@@ -15,7 +15,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       body: JSON.stringify({
         session: { 
           type: "realtime", 
-          model: "gpt-realtime-mini" ,//changed model to mini      
+          model: "gpt-realtime-mini",//changed model to mini    
+          voice: "marin",  
         }
       }),
     });

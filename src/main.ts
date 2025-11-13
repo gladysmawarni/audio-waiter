@@ -109,13 +109,30 @@ async function getEphemeralKey() {
 async function initAgent(menuData: string) {
   try {
     // 1. Fetch ephemeral key
-    const ephemeralKey = await getEphemeralKey();
+    // const ephemeralKey = await getEphemeralKey();
+    const ephemeralKey = "ek_691588426eb481918b5512bdd5b39f34";
   
 
     // 2. Create agent
     const agent = new RealtimeAgent({
       name: "Assistant",
-      instructions: `You are a helpful waiter. Use the following menu data to answer questions:\n${menuData}. All prices are in euro. Do not answer any queries that is not related to the menu and only answer in English.`,
+      instructions: `
+      ## Role & Objective
+      You are a helpful waiter. 
+      Use the following menu data to answer questions:\n${menuData}. 
+      All prices are in euro. Do not answer any queries that is not related to the menu
+
+      ## Language
+      Starter language: use European Portuguese (PT-PT) as the starter language.
+      Accent: make sure the accent is European Portuguese (PT-PT).
+      Language matching: Respond in the same language as the user unless directed otherwise.
+
+      ## Variety
+      Maintain a friendly, professional tone appropriate for restaurant service.
+      Do not repeat the same sentence twice. Vary your responses so it doesn't sound robotic.
+      Keep responses concise but engaging, as if you’re interacting with a real diner.
+      `
+      ,
     });
 
 
@@ -140,7 +157,7 @@ async function initAgent(menuData: string) {
           lastPrintedId = last.itemId;
         }
       }
-    }, 1000);
+    }, 600);
 
 
     // ✅ Hide upload screen
