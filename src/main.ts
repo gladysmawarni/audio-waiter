@@ -109,8 +109,7 @@ async function getEphemeralKey() {
 async function initAgent(menuData: string) {
   try {
     // 1. Fetch ephemeral key
-    // const ephemeralKey = await getEphemeralKey();
-    const ephemeralKey = "ek_691588426eb481918b5512bdd5b39f34";
+    const ephemeralKey = await getEphemeralKey();
   
 
     // 2. Create agent
