@@ -13,13 +13,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        session: { 
-          type: "realtime", 
-          model: "gpt-realtime-mini",//changed model to mini    
-          voice: "marin",  
-        }
+      session: { 
+        type: "realtime",
+        model: "gpt-realtime-mini",
+        audio: {
+          output: {
+            voice: "marin",
+          },
+        },
+        },
       }),
     });
+
 
 
     if (!resp.ok) {

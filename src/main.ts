@@ -94,7 +94,7 @@ async function getEphemeralKey() {
   try {
     const res = await fetch("/api/session");
     console.log("Got response:", res.status);
-    console.log(res)
+    // console.log(res)
 
     const data = await res.json();
     return data.value;
@@ -111,7 +111,6 @@ async function initAgent(menuData: string) {
     // 1. Fetch ephemeral key
     const ephemeralKey = await getEphemeralKey();
   
-
     // 2. Create agent
     const agent = new RealtimeAgent({
       name: "Assistant",
@@ -137,7 +136,7 @@ async function initAgent(menuData: string) {
 
     // 3. Connect
     session = new RealtimeSession(agent); // assign to global variable
-    await session.connect({ apiKey: ephemeralKey });
+    await session.connect({ apiKey: ephemeralKey});
 
 
     // look for new history every 1 second
