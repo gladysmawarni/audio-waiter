@@ -41,6 +41,34 @@
       background: #f0f8ff;
     }
 
+     #uploadScreen {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    #uploadBtn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+
+    #uploadBtn:hover {
+      background-color: #0056b3;
+    }
+
+    #uploadBtn:active {
+      transform: scale(0.98);
+    }
+
     #chat-container {
       width: 500px;
       margin: 10px auto;
@@ -132,10 +160,17 @@
   <!-- Upload Screen -->
   <div id="uploadScreen">
     <h1>Upload Information</h1>
+
     <p>Menu</p>
     <input type="file" id="fileInput" accept=".xlsx, .xls" />
+
     <p>Additional Information</p>
     <input type="file" id="fileInput2" accept=".xlsx, .xls, .doc, .txt, .md, .pdf" />
+
+    <br /><br />
+
+    <!-- Upload Button -->
+    <button id="uploadBtn">Upload</button>
 
   </div>
 

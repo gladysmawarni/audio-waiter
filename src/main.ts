@@ -23,7 +23,10 @@ interface RealtimeHistoryItem {
 }
 
 
+const uploadBtn = document.getElementById("uploadBtn") as HTMLInputElement;
 const fileInput = document.getElementById("fileInput") as HTMLInputElement;
+
+
 const uploadScreen = document.getElementById("uploadScreen") as HTMLDivElement;
 const mainApp = document.getElementById("mainApp") as HTMLDivElement;
 
@@ -35,7 +38,7 @@ let session: RealtimeSession | null = null; // top-level, accessible everywhere
 
 
 
-fileInput.addEventListener("change", async () => {
+uploadBtn.addEventListener("click", async () => {
   const file = fileInput.files?.[0];
   if (!file) return alert("No file selected!");
 
@@ -110,6 +113,7 @@ async function initAgent(menuData: string) {
   try {
     // 1. Fetch ephemeral key
     const ephemeralKey = await getEphemeralKey();
+
   
     // 2. Create agent
     const agent = new RealtimeAgent({
