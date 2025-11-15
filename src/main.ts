@@ -148,7 +148,8 @@ async function getEphemeralKey() {
 async function initAgent(menuData: string, infoData: string) {
   try {
     // 1. Fetch ephemeral key
-    const ephemeralKey = await getEphemeralKey();
+    // const ephemeralKey = await getEphemeralKey();
+    const ephemeralKey = "ek_6918cdeb8c408191b96f257d07b787ac";
 
     // 2. Create agent
     const agent = new RealtimeAgent({
@@ -177,12 +178,14 @@ async function initAgent(menuData: string, infoData: string) {
       ,
     });
 
+    
 
     // 3. Connect
     session = new RealtimeSession(agent); // assign to global variable
     await session.connect({ apiKey: ephemeralKey});
 
-
+    session.mute(true);
+    
     // look for new history every 1 second
     let lastPrintedId: string | null = null;
 
